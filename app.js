@@ -80,6 +80,6 @@ app.use('*',(err,req,res,next)=>{
     console.log(`Hello from error function -  ${err.message} Error Occured !`);
 })
 
-app.listen(5000,()=>{
+app.listen(process.env.PORT,()=>{
     console.log(`server is running at port ${5000}` )
 })
