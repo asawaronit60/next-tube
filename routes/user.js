@@ -13,7 +13,7 @@ router.post('/createUser',userController.createUser)
 router.get('/getUser/:id',userController.getUser)
 router.delete('/deleteUser/:id',userController.deleteUser)
 router.patch('/updateUser/:id',userController.updateUser)
-
+router.post('/updatePassword',authController.updatePassword)
 
 
 module.exports = router

@@ -15,12 +15,12 @@ const createSendToken = async (user, statusCode, res) => {
 
   let token = signtoken(user.id)
   const cookieOptions = {
-      expires: new Date(Date.now() + JWT_EXPIRES_IN * 24 * 60 * 60 * 1000),
-      secure: false,
-      httpOnly: true
-  }
+    expires: new Date(Date.now() + JWT_EXPIRES_IN * 24 * 60 * 60 * 1000),
+    secure: false,
+    httpOnly: true
+}
 
-  res.cookie('jwt', token, cookieOptions)
+//res.cookie('jwt', token, cookieOptions)
 
   res.status(statusCode).json({
       status: 'success',
@@ -173,4 +173,29 @@ exports.adminLogin = async(req,res)=>{
       message: err.message
   }) 
   }
+}
+
+
+exports.updatePassword = async(req,res)=>{
+
+  try {
+    
+    let {email,password} = req.body
+
+    let passwordHashed = await bcrypt.hash(password,10)
+
+    await User.update({password:passwordHashed},{where:{email}})
+
+    res.status(200).json({
+      status:'success',
+      message:'Password updated successfully!'
+    })
+
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err.message
+  }) 
+  }
+
 }
