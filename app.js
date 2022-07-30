@@ -24,6 +24,7 @@ const wishlist = require('./routes/wishlist')
 const like = require('./routes/like')
 const subscribe = require('./routes/subscribe')
 const blogsComment = require('./routes/blogComment')
+const role = require('./routes/role')
 const {sequelize}  = require('./connection')
 
 const alter = false
@@ -44,7 +45,9 @@ if(!fs.existsSync('./assets')){
    fs.mkdir('./assets',(err)=>{
     fs.mkdir('./assets/videos',{recursive:true},(err)=>{})
     fs.mkdir('./assets/images',{recursive:true},(err)=>{})
+    fs.mkdir('./assets/sliderImages',{recursive:true},(err)=>{})
    })
+
 }
 
 app.use(function (req, res, next) {
@@ -75,6 +78,7 @@ app.use('/api/v1/wishlist',wishlist)
 app.use('/api/v1/like',like)
 app.use('/api/v1/subscribe',subscribe)
 app.use('/api/v1/blogsComment',blogsComment)
+app.use('/api/v1/role',role)
 
 app.use('*',(err,req,res,next)=>{
     console.log(`Hello from error function -  ${err.message} Error Occured !`);

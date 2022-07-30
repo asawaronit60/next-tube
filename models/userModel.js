@@ -1,4 +1,5 @@
 const { sequelize, DataTypes } = require('../connection')
+const Role = require('../models/Role')
 
 const user = sequelize.define("user", {
   id: {
@@ -16,6 +17,30 @@ const user = sequelize.define("user", {
     allowNull: false,
     // unique: true
   },
+  phone:{
+    type:DataTypes.STRING,
+    defaultValue:null
+  },
+  address:{
+    type:DataTypes.STRING,
+    defaultValue:null
+  },
+  country:{
+    type:DataTypes.STRING,
+    defaultValue:null
+  },
+  state:{
+    type:DataTypes.STRING,
+    defaultValue:null
+  },
+  city:{
+    type:DataTypes.STRING,
+    defaultValue:null
+  },
+  age:{
+    type:DataTypes.INTEGER,
+    defaultValue:null
+  },
   password: {
     type: DataTypes.STRING,
     allowNull: false
@@ -24,17 +49,10 @@ const user = sequelize.define("user", {
     type: DataTypes.ENUM("UNBLOCK", "BLOCK"),
     allowNull: false,
     defaultValue: 'UNBLOCK'
-  },
-  role: {
-    type: DataTypes.ENUM('ADMIN', 'USER', 'SUPERADMIN'),
-    allowNull: false,
-    defaultValue: 'USER'
-  },
-  date_of_birth: {
-    type: DataTypes.DATEONLY,
-    allowNull: false
   }
 })
 
+
+user.belongsTo(Role,{foreignKey:'role_id',targetKey:'id'})
 
 module.exports = user

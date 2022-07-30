@@ -33,15 +33,12 @@ const createSendToken = async (user, statusCode, res) => {
 exports.signup = async (req, res) => {
   try {
      
-      let { name,email,  role  , password,status,date_of_birth } = req.body
+      let { password , ...remaining} = req.body
       let passwordHashed = await bcrypt.hash(password, 10)
-      let user = await User.create({
-        name,
-        email,
+
+     let user = await User.create({
         password:passwordHashed,
-        status,
-        role,
-        date_of_birth
+        ...remaining
       })
       
       createSendToken(user, 201, res)

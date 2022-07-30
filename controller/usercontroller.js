@@ -1,10 +1,15 @@
 const User = require('../models/userModel')
 const bcrypt = require('bcrypt')
-
+const Role = require('../models/Role')
 exports.getAllUsers = async (req, res) => {
 
   try {
-    let data = User.findAll()
+    let data = User.findAll({
+      include:[{
+        model:Role,
+        attributes:['role']
+      }]
+    })
 
     if (req.query.fields) {
       let a = [];

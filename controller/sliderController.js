@@ -1,16 +1,27 @@
 const Slider = require('../models/slider')
+const multer = require('multer')
+const path = require('path')
+let storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      // Uploads is the Upload_folder_name 
+      cb(null, 'assets/sliderImages')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname))
+    }
+  });
+  
+  
+  const upload = multer({ storage, dest: '../assets/videos/' }).single("image");
+
 
 exports.getAllSlider = async (req, res) => {
     try {
-        let slider =  Slider.findAll()
-        if(req.query.type)
-            slider = Slider.findAll({where:{slide_for:req.query.type}})
-
-        let data = await slider
+        let slider = await Slider.findAll()
 
         res.status(200).json({
             status: 'success',
-            data
+            slider
         })
 
     } catch (err) {
@@ -38,10 +49,18 @@ exports.getSlider = async(req,res)=>{
 
 exports.createSlider = async (req, res) => {
     try {
-        await Slider.create(req.body)
-        res.status(200).json({
-            status: 'success'
+
+        upload(req,res,async(err)=>{
+            
+            req.body.image = req.file.filename
+            
+            await Slider.create(req.body)
+            res.status(200).json({
+                status: 'success'
+            })
         })
+
+      
 
     } catch (err) {
         res.status(400).json({

@@ -8,8 +8,7 @@ const slider = sequelize.define('slider',{
         primaryKey: true
     },
     slide_for: {
-        type: DataTypes.ENUM,
-        values:['movie','tvSeries'],
+        type: DataTypes.STRING,
         allowNull: false
     },
     slide:{
