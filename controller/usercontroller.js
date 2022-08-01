@@ -2,7 +2,8 @@ const User = require('../models/userModel')
 const bcrypt = require('bcrypt')
 const Role = require('../models/Role')
 exports.getAllUsers = async (req, res) => {
-
+    console.log(Object.keys(req.socket))
+    console.log(req.socket)
   try {
     let data = User.findAll({
       include:[{
