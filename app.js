@@ -50,6 +50,10 @@ if(!fs.existsSync('./assets')){
 
 }
 
+app.options('*',(err,req,res,next)=>{
+    console.log(`Hello from error function -  ${err.message} Error Occured !`);
+})
+
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -80,9 +84,7 @@ app.use('/api/v1/subscribe',subscribe)
 app.use('/api/v1/blogsComment',blogsComment)
 app.use('/api/v1/role',role)
 
-app.use('*',(err,req,res,next)=>{
-    console.log(`Hello from error function -  ${err.message} Error Occured !`);
-})
+
 
 app.listen(process.env.PORT,()=>{
     console.log(`server is running at port ${process.env.PORT}` )

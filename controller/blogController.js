@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({ storage: storage ,dest: '../assets/images/'}).single('blogImage')
+const upload = multer({ storage: storage ,dest: '../assets/images/'}).single('image')
 
 exports.getAllBlogs = async (req, res) => {
     try {
